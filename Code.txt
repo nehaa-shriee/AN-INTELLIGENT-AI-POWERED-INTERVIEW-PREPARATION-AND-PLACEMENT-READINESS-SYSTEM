@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+
+using namespace std;
+
+class InterviewSystem
+{
+private:
+
+
+    string questions[5] =
+    {
+        "Tell me about yourself",
+        "What are your strengths?",
+        "Why should we hire you?",
+        "Explain your mini project",
+        "What is Artificial Intelligence?"
+    };
+
+    string answer;
+    int score;
+
+public:
+
+    void startInterview()
+    {
+        srand(time(0));
+
+        int randomQuestion = rand() % 5;
+
+        cout << "\n========================================";
+        cout << "\n AI INTERVIEW PREPARATION SYSTEM";
+        cout << "\n========================================\n";
+
+        cout << "\nInterview Question:\n";
+        cout << questions[randomQuestion] << endl;
+
+        cout << "\nEnter Your Answer:\n";
+
+        cin.ignore();
+        getline(cin, answer);
+
+        evaluateAnswer();
+        saveResult();
+    }
+
+    void evaluateAnswer()
+    {
+        score = answer.length() % 10 + 1;
+
+        cout << "\n========================================";
+        cout << "\n AI EVALUATION RESULT";
+        cout << "\n========================================\n";
+
+        cout << "\nScore : " << score << "/10\n";
+
+        if(answer.length() > 50)
+        {
+            cout << "Feedback : Good detailed answer\n";
+        }
+        else
+        {
+            cout << "Feedback : Try to explain in more detail\n";
+        }
+    }
+
+    void saveResult()
+    {
+        ofstream file("result.txt", ios::app);
+
+        file << "\n==============================\n";
+        file << "User Answer : " << answer << endl;
+        file << "Score : " << score << "/10\n";
+
+        if(answer.length() > 50)
+        {
+            file << "Feedback : Good detailed answer\n";
+        }
+        else
+        {
+            file << "Feedback : Try to explain in more detail\n";
+        }
+
+        file.close();
+
+        cout << "\nResult saved in result.txt file\n";
+    }
+};
+
+int main()
+{
+    InterviewSystem obj;
+
+    int choice;
+
+    cout << "\n========================================";
+    cout << "\n WELCOME TO AI INTERVIEW SYSTEM";
+    cout << "\n========================================\n";
+
+    cout << "\n1. Start Interview";
+    cout << "\n2. Exit";
+
+    cout << "\n\nEnter Your Choice : ";
+    cin >> choice;
+
+    switch(choice)
+    {
+        case 1:
+            obj.startInterview();
+            break;
+
+        case 2:
+            cout << "\nThank You!\n";
+            break;
+
+        default:
+            cout << "\nInvalid Choice\n";
+    }
+
+    return 0;
+}
